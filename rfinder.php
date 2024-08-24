@@ -9,31 +9,7 @@ class rfinder{
         $this->conn = $connection;
     }
 
-    public function getNumbers(){
-        $query = "select *from numbers where group_id is NULL";
-        $stmt = $this->conn->prepare($query);
-        
-        if($stmt->execute()){
-            $numbers = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-            return $numbers;
-        }else{ return NULL; }
-
-
-    }
-    public function getNumberByGroup($id){
-        $query = "select *from numbers where group_id = '$id'";
-        $stmt = $this->conn->prepare($query);
-        
-        if($stmt->execute()){
-            $numbers = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-            return $numbers;
-        }else{ return NULL; }
-
-
-    }
- 
+    
     public function getGroupIdByName($groupName){
 
         $query = "select group_id from groups where group_name = :group_name";
@@ -58,24 +34,6 @@ class rfinder{
 
         if($stmt->execute()){return true;  
         }else{ return false;}
-    }
-    public function validateNumber($number){
-
-        $query = "select *from numbers where number =:number";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':number',$number,PDO::PARAM_STR);
-        if($stmt->execute()){
-            $numbers = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            return $numbers;
-        }
-
-    }
-    public function addNumber($number){
-        $stmt = $this->conn->prepare("insert into numbers (number) values (:number)");
-        $stmt->bindParam(':number', $number);
-       if($stmt->execute()){
-        return true;
-       }
     }
 
     public function validateEmail($email){
